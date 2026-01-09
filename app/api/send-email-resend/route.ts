@@ -105,7 +105,6 @@ export async function POST(req: NextRequest) {
     const { data, error } = await resend.emails.send({
         from: fromEmail,
         to: ownerEmail,
-        reply_to: email,
         subject: `New Form Submission from ${name} - Unveiled Echo Clinic`,
         html: getFormSubmissionTemplate({
             name,
