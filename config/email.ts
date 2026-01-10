@@ -10,8 +10,8 @@ interface EmailConfig {
 // Get email configuration from environment variables
 export const getEmailConfig = (): EmailConfig => {
   return {
-    ownerEmail: import.meta.env.VITE_OWNER_EMAIL || 'owner@unveiledecho.com',
-    senderEmail: import.meta.env.VITE_SMTP_USER || 'noreply@unveiledecho.com',
+    ownerEmail: process.env.OWNER_EMAIL || 'owner@unveiledecho.com',
+    senderEmail: process.env.SMTP_USER || 'noreply@unveiledecho.com',
     senderName: 'Unveiled Echo - Clinic Form Submission',
   };
 };

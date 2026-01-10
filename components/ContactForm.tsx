@@ -15,6 +15,9 @@ const contactSchema = z.object({
   phone: z.string().trim().max(20, "Phone must be less than 20 characters").optional(),
   message: z.string().trim().min(1, "Message is required").max(1000, "Message must be less than 1000 characters"),
 });
+
+type ContactFormData = z.infer<typeof contactSchema>;
+
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -24,7 +27,7 @@ const ContactForm = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
-  const [pendingFormData, setPendingFormData] = useState(null);
+  const [pendingFormData, setPendingFormData] = useState<ContactFormData | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
