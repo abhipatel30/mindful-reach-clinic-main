@@ -3,23 +3,22 @@
 import { google } from 'googleapis';
 
 // --- Configuration ---
-const SERVICE_ACCOUNT_CLIENT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL;
-const SERVICE_ACCOUNT_PRIVATE_KEY = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY;
+const GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL;
+const GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY;
 const USER_TO_IMPERSONATE = 'contact@unveiledecho.com';
-const EMAIL_TO = 'contact@unveiledecho.com';
+const EMAIL_TO = 'intakes@unveiledecho.com';
 const EMAIL_FROM = USER_TO_IMPERSONATE;
 
 // --- Helper Functions ---
 
 function createJwtClient() {
   const scopes = ['https://www.googleapis.com/auth/gmail.send'];
-  const jwtClient = new google.auth.JWT(
-    SERVICE_ACCOUNT_CLIENT_EMAIL,
-    undefined,
-    SERVICE_ACCOUNT_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-    scopes,
-    USER_TO_IMPERSONATE
-  );
+  const jwtClient = new google.auth.JWT({
+    email: GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL,
+    key: GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    scopes: scopes,
+    subject: USER_TO_IMPERSONATE,
+  });
   return jwtClient;
 }
 
@@ -54,7 +53,7 @@ interface FormSubmissionData {
 }
 
 export async function sendEmailAction(formData: FormSubmissionData) {
-  if (!SERVICE_ACCOUNT_CLIENT_EMAIL || !SERVICE_ACCOUNT_PRIVATE_KEY) {
+  if (!GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL || !GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY) {
     console.error('✗ Google Service Account credentials not configured');
     throw new Error('Email server is not configured.');
   }
