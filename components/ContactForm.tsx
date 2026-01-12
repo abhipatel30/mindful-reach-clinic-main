@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { z } from "zod";
 import PrivacyPolicyDialog from "./PrivacyPolicyDialog";
-import { sendFormSubmissionEmail } from "@/services/resendEmailService";
+import { sendEmailAction } from "@/app/actions";
 
 const contactSchema = z.object({ 
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
@@ -57,8 +57,8 @@ const ContactForm = () => {
         return;
       }
 
-      // Send email via backend API
-      await sendFormSubmissionEmail(pendingFormData);
+      // Call the server action directly
+      await sendEmailAction(pendingFormData);
 
       // Success
       toast.success("Thank you for your message! We'll get back to you shortly.");
