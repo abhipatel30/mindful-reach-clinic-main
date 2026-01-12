@@ -90,7 +90,13 @@ export async function sendEmailAction(formData: FormSubmissionData) {
     return { success: true, message: 'Form submission email sent successfully' };
 
   } catch (error: any) {
-    console.error('✗ Error sending email via Server Action:', error?.message || error);
-    throw new Error(error?.response?.data?.error?.message || error?.message || 'Failed to send email');
+    // Log the entire error object for detailed debugging
+    console.error('--- DETAILED GMAIL API ERROR ---');
+    console.error(JSON.stringify(error, null, 2));
+    console.error('--- END OF DETAILED ERROR ---');
+    
+    // Construct a more informative error message for the client
+    const errorMessage = error?.response?.data?.error?.message || error?.message || 'An unknown error occurred while sending the email.';
+    throw new Error(`Failed to send email: ${errorMessage}`);
   }
 }
