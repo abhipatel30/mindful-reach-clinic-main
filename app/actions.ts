@@ -5,7 +5,10 @@ import { google } from 'googleapis';
 // --- Configuration ---
 const GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL;
 const GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY;
-const USER_TO_IMPERSONATE = 'contact@unveiledecho.com';
+const USER_TO_IMPERSONATE = 'intakes@unveiledecho.com';
+
+// 
+// const USER_TO_IMPERSONATE = 'contact@unveiledecho.com';
 const EMAIL_TO = 'intakes@unveiledecho.com';
 const EMAIL_FROM = USER_TO_IMPERSONATE;
 
